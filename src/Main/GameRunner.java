@@ -11,7 +11,6 @@ public class GameRunner extends Canvas implements Runnable {
 	public static final int HEIGHT = WIDTH / 12 * 9;
 	public static int scale = 4;
 	public static final String NAME = "placeholder";
-	private int test;
 	
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT,
 			BufferedImage.TYPE_INT_RGB);
