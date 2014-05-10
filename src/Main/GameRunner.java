@@ -1,5 +1,6 @@
 package Main;
 
+import gfx.SpriteSheet;
 import java.awt.*;
 import java.awt.image.*;
 import javax.swing.*;
@@ -11,12 +12,11 @@ public class GameRunner extends Canvas implements Runnable {
 	public static final int HEIGHT = WIDTH / 12 * 9;
 	public static int scale = 4;
 	public static final String NAME = "placeholder";
-	
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT,
 			BufferedImage.TYPE_INT_RGB);
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer())
 			.getData();
-
+	private SpriteSheet spriteSheet = new SpriteSheet("/sprite_sheet.png");
 	private JFrame frame;
 	public boolean running = true;
 	public int tickcount = 0;
@@ -47,7 +47,6 @@ public class GameRunner extends Canvas implements Runnable {
 	public void run() {
 		long lastTime = System.nanoTime();
 		double nsPerTick = 1000000000.0 / 60.0; // how many nano secs per tick
-												
 
 		int ticks = 0; // how many updates
 		int frames = 0; // current fps
@@ -81,7 +80,7 @@ public class GameRunner extends Canvas implements Runnable {
 
 			if (System.currentTimeMillis() - lastTimer >= 1000) {
 				lastTimer += 1000; // update another second
-				System.out.println(frames + " " + ticks);
+				System.out.println(frames + " frames " + ticks + " ticks");
 				frames = 0;
 				ticks = 0;
 			}
