@@ -1,23 +1,27 @@
 package Main;
-
+import gfx.Screen;
 import gfx.SpriteSheet;
 import java.awt.*;
 import java.awt.image.*;
-import javax.swing.*;
+import javax.swing.JFrame;
 
 public class GameRunner extends Canvas implements Runnable {
 
 	private static final long serialVersionUID = 1L;
 	public static final int WIDTH = 160;
 	public static final int HEIGHT = WIDTH / 12 * 9;
-	public static int scale = 4;
+	public static int scale = 3;
+	
+	private JFrame frame;
 	public static final String NAME = "placeholder";
+	
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT,
 			BufferedImage.TYPE_INT_RGB);
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer())
 			.getData();
-	private SpriteSheet spriteSheet = new SpriteSheet("/sprite_sheet.png");
-	private JFrame frame;
+	
+	private Screen screen;
+	
 	public boolean running = true;
 	public int tickcount = 0;
 
@@ -32,9 +36,13 @@ public class GameRunner extends Canvas implements Runnable {
 		frame.add(this, BorderLayout.CENTER);
 		frame.pack();
 		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
 
+	public void init(){
+		screen = new Screen(WIDTH, HEIGHT, new SpriteSheet("/sprite_sheet.png"));
+	}
 	public synchronized void start() {
 		running = true;
 		new Thread(this).start();
@@ -53,6 +61,8 @@ public class GameRunner extends Canvas implements Runnable {
 
 		long lastTimer = System.currentTimeMillis(); // time to reset data
 		double delta = 0; // how many unprocessed nano seconds so far
+		
+		init();
 
 		while (running) {
 			long now = System.nanoTime();
@@ -89,9 +99,6 @@ public class GameRunner extends Canvas implements Runnable {
 
 	public void tick() {
 		tickcount++;
-		for (int i = 0; i < pixels.length; i++) {
-			pixels[i] = i + tickcount;
-		}
 	}
 
 	public void render() {
@@ -102,8 +109,11 @@ public class GameRunner extends Canvas implements Runnable {
 			createBufferStrategy(3); // enables triple buffering
 			return;
 		}
-
+		
+		screen.render(pixels, 0, WIDTH);
+		
 		Graphics g = bs.getDrawGraphics();
+		g.drawRect(0, 0, getWidth(), getHeight());
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 		g.dispose(); // free up memory
 		bs.show(); // show contents of the buffer
@@ -113,5 +123,4 @@ public class GameRunner extends Canvas implements Runnable {
 
 		new GameRunner().start();
 	}
-
 }
