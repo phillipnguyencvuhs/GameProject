@@ -47,14 +47,14 @@ public class Screen {
 		
 		int xTile = tile % 32;
 		int yTile = tile / 32;
-		int tileOffset = (xTile << 3) + (yTile << 3) * sheet.width;
+		int tileOffset = (xTile << 3) + (yTile << 3) * sheet.getWidth();
 		for(int y = 0; y < 8; y++){
 			if(y + yPos < 0 || y + yPos >= height) continue;
 			int ySheet = y;
 			for(int x = 0; x < 8; x++){
 				if(x + yPos < 0 || x+ xPos >= height) continue;
 				int xSheet = x;
-				int col = (color >>(sheet.pixels[xSheet + ySheet * sheet.width + tileOffset] * 8)) & 255;
+				int col = (color >>(sheet.getPixels()[xSheet + ySheet * sheet.getWidth() + tileOffset] * 8)) & 255;
 				if(col < 255) pixels[(x+xPos) + (y + yPos * width)] = col; 
 			}
 		}
