@@ -100,10 +100,8 @@ public class GameRunner extends Canvas implements Runnable {
 	//tick method updates the entire game
 	public void tick() {
 		tickcount++;
-		
-		for(int i = 0; i < pixels.length; i++){
-			pixels[i] = i + tickcount;
-		}
+		//screen.xOffset++;
+		//screen.yOffset++;
 	}
 	
 	//print out the updates
