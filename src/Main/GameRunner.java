@@ -23,7 +23,7 @@ public class GameRunner extends Canvas implements Runnable {
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer())
 			.getData(); // represents how many pixels are inside image
 
-	private Screen screen;
+	public Screen screen;
 	public InputHandler input;
 
 	public GameRunner() {
@@ -103,7 +103,6 @@ public class GameRunner extends Canvas implements Runnable {
 	// tick method updates the entire game
 	public void tick() {
 		tickcount++;
-		
 		//the following should move the entire screen...
 		if (input.up.isPressed()) {
 			screen.yOffset--;
@@ -116,7 +115,7 @@ public class GameRunner extends Canvas implements Runnable {
 		}
 		if (input.right.isPressed()) {
 			screen.xOffset++;
-		}	
+		}
 	}
 
 	// print out the updates
@@ -131,7 +130,6 @@ public class GameRunner extends Canvas implements Runnable {
 		screen.render(pixels, 0, WIDTH);
 
 		Graphics g = bs.getDrawGraphics();
-		g.drawRect(0, 0, getWidth(), getHeight());
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 		g.dispose(); // free up memory
 		bs.show(); // show contents of the buffer

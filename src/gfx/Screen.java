@@ -56,17 +56,19 @@ public class Screen {
 				if (xMax > width)
 					xMax = width;
 
-				/*******************************************
+				/*****************************************************************
 				 * Information on bitwise AND (&) operator: ints take up 32 bits
 				 * of space. The & operator compares each binary digit of two
 				 * integers and returns a new integer. It does this by comparing
 				 * every bit of each int and returns 1 if they are both 1,
 				 * otherwise the result is 0.
-				 * ------------------------------------------ Example: 37 & 23
-				 * ------------------------------------------ 37 in binary: 0 0
-				 * 1 0 0 1 0 1 23 in binary: 0 0 0 1 0 1 1 1 result: 5 = 0 0 0 0
-				 * 0 1 0 1
-				 *******************************************/
+				 ***************************************************************** 
+				 * Example: 37 & 23
+				 ***************************************************************** 
+				 * 37 in binary:  0 0 1 0 0 1 0 1 
+				 * 23 in binary:  0 0 0 1 0 1 1 1 
+				 * result in bin: 0 0 0 0 0 1 0 1 = 5 (in decimal)
+				 *****************************************************************/
 				// gives us the index of whatever tile we are on
 				int tileIndex = (xTile & (MAP_WIDTH_MASK))
 						+ (yTile & (MAP_WIDTH_MASK)) * MAP_WIDTH;
@@ -74,11 +76,12 @@ public class Screen {
 				// this loop actually draws everything
 				for (int y = yMin; y < yMax; y++) {
 					// get the location of where we are in the sheet
-					int sheetPixel = ((y + yOffset)& 7) * sheet.getWidth()
+					int sheetPixel = ((y + yOffset) & 7) * sheet.getWidth()
 							+ ((xMin + xOffset) & 7);
-					int tilePixel = offset + xMin + y * row; 
+					int tilePixel = offset + xMin + y * row;
 					for (int x = xMin; x < xMax; x++) {
-						int color = tileIndex * 4 + sheet.getPixels()[sheetPixel++];
+						int color = tileIndex * 4
+								+ sheet.getPixels()[sheetPixel++];
 						pixels[tilePixel++] = colors[color];
 					}
 				}

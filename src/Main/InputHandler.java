@@ -37,17 +37,14 @@ public class InputHandler implements KeyListener {
 	public Key left = new Key();
 	public Key right = new Key();
 
-	@Override
 	public void keyTyped(KeyEvent e) {
 		toggleKey(e.getKeyCode(), true);
 	}
 
-	@Override
 	public void keyPressed(KeyEvent e) {
 		toggleKey(e.getKeyCode(), false);
 	}
 
-	@Override
 	public void keyReleased(KeyEvent e) {
 
 	}

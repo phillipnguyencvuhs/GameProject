@@ -21,7 +21,7 @@ public class SpriteSheet {
 		}
 
 		//just in case the try/catch doesn't work:
-		if (image == null) { 
+		if (image == null) {
 			return;
 		}
 
@@ -33,9 +33,9 @@ public class SpriteSheet {
 
 		/***********************************************************
 		 * Information on colors:
-		 * All color values have two values for alpha channel, red, 
+		 * All color values have two values for alpha channel, red,
 		 * green, and blue (AARRGGBB). White is 0xffffff (which is a
-		 * hex value, which would be 255, 255, 255 in decimal) because 
+		 * hex value, which would be 255, 255, 255 in decimal) because
 		 * no transparency is needed.
 		 * Important colors to know:
 		 * black(0):      000000 (255/3*0 = 0, all RGB values are 0)
@@ -53,19 +53,19 @@ public class SpriteSheet {
 			System.out.println(pixels[i]);
 		}
 	}
-	
+
 	public int[] getPixels(){
 		return pixels;
 	}
-	
+
 	public int getWidth(){
 		return width;
 	}
-	
+
 	public int getHeight(){
 		return height;
 	}
-	
+
 	public String path(){
 		return path;
 	}
