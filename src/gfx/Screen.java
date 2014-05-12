@@ -73,11 +73,11 @@ public class Screen {
 				// this loop actually draws everything
 				for (int y = yMin; y < yMax; y++) {
 					// get the location of where we are in the sheet
-					int sheetPixel = ((y + yOffset)& 7) * sheet.width
+					int sheetPixel = ((y + yOffset)& 7) * sheet.getWidth()
 							+ ((xMin + xOffset) & 7);
-					int tilePixel = offset + xMin + y * row;
+					int tilePixel = offset + xMin + y * row; 
 					for (int x = xMin; x < xMax; x++) {
-						int color = tileIndex * 4 + sheet.pixels[sheetPixel++];
+						int color = tileIndex * 4 + sheet.getPixels()[sheetPixel++];
 						pixels[tilePixel++] = colors[color];
 					}
 				}

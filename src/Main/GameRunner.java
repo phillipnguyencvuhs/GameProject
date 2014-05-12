@@ -6,29 +6,29 @@ import java.awt.image.*;
 import javax.swing.JFrame;
 
 public class GameRunner extends Canvas implements Runnable {
-
+	
 	private static final long serialVersionUID = 1L;
 	public static final int WIDTH = 160;
 	public static final int HEIGHT = WIDTH / 12 * 9;
-	public static int scale = 3;
+	public static int SCALE = 3;
+	public static final String NAME = "placeholder";
 	
 	private JFrame frame;
-	public static final String NAME = "placeholder";
+	public boolean running = true;
+	public int tickcount = 0;
 	
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT,
 			BufferedImage.TYPE_INT_RGB);
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer())
-			.getData();
+			.getData(); //represents how many pixels are inside image
 	
 	private Screen screen;
+	//private SpriteSheet spritesheet = new SpriteSheet("/sprite_sheet.png");
 	
-	public boolean running = true;
-	public int tickcount = 0;
-
 	public GameRunner() {
-		setMinimumSize(new Dimension(WIDTH * scale, HEIGHT * scale));
-		setMaximumSize(new Dimension(WIDTH * scale, HEIGHT * scale));
-		setPreferredSize(new Dimension(WIDTH * scale, HEIGHT * scale));
+		setMinimumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
+		setMaximumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
+		setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 
 		frame = new JFrame(NAME);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -49,7 +49,7 @@ public class GameRunner extends Canvas implements Runnable {
 	}
 
 	public synchronized void stop() {
-
+		running = false;
 	}
 
 	public void run() {
@@ -73,7 +73,7 @@ public class GameRunner extends Canvas implements Runnable {
 			while (delta >= 1) {
 				ticks++;
 				tick();
-				delta--;
+				delta -= 1;
 				shouldRender = true;
 			}
 
@@ -96,14 +96,19 @@ public class GameRunner extends Canvas implements Runnable {
 			}
 		}
 	}
-
+	
+	//tick method updates the entire game
 	public void tick() {
 		tickcount++;
+		
+		for(int i = 0; i < pixels.length; i++){
+			pixels[i] = i + tickcount;
+		}
 	}
-
+	
+	//print out the updates
 	public void render() {
-
-		BufferStrategy bs = getBufferStrategy();
+		BufferStrategy bs = getBufferStrategy(); //organizer
 
 		if (bs == null) {
 			createBufferStrategy(3); // enables triple buffering
@@ -120,7 +125,6 @@ public class GameRunner extends Canvas implements Runnable {
 	}
 
 	public static void main(String[] args) {
-
 		new GameRunner().start();
 	}
 }
