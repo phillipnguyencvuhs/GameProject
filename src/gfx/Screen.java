@@ -1,6 +1,7 @@
 package gfx;
 
 //This class contains some basic information about the screen
+// and also some level information as well (at the moment)
 public class Screen {
 
 	public static final int MAP_WIDTH = 64;
@@ -18,7 +19,7 @@ public class Screen {
 
 	public SpriteSheet sheet;
 
-	public Screen(int height, int width, SpriteSheet sheet) {
+	public Screen(int width, int height, SpriteSheet sheet) {
 
 		this.height = height;
 		this.width = width;

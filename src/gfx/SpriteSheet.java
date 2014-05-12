@@ -38,12 +38,12 @@ public class SpriteSheet {
 		 * hex value, which would be 255, 255, 255 in decimal) because 
 		 * no transparency is needed.
 		 * Important colors to know:
-		 * black:      000000 (255/3*0 = 0, all RGB values are 0)
-		 * gray:       555555 (255/3*1 = 85, all RGB values are 85)
-		 * light gray: aaaaaa (255/3*2 = 170, all RGB values are 170)
-		 * white: 	   ffffff (255/3*3 = 255, all RGB values are 255)
+		 * black(0):      000000 (255/3*0 = 0, all RGB values are 0)
+		 * gray(1):       555555 (255/3*1 = 85, all RGB values are 85)
+		 * light gray(2): aaaaaa (255/3*2 = 170, all RGB values are 170)
+		 * white(3): 	  ffffff (255/3*3 = 255, all RGB values are 255)
 		 ***********************************************************/
-		// loop sets a color value into either a 0,1,2,3,or 4
+		// loop sets a color value into either a 0,1,2, or 3
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = (pixels[i] & 0xff) / 64;
 		//removed alpha channel and divided by 255/4 (which is about 64)
