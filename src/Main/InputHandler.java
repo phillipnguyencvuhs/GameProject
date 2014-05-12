@@ -38,19 +38,19 @@ public class InputHandler implements KeyListener {
 	public Key right = new Key();
 
 	public void keyTyped(KeyEvent e) {
-		toggleKey(e.getKeyCode(), true);
+		
 	}
 
 	public void keyPressed(KeyEvent e) {
-		toggleKey(e.getKeyCode(), false);
+		toggleKey(e.getKeyCode(), true);
 	}
 
 	public void keyReleased(KeyEvent e) {
-
+		toggleKey(e.getKeyCode(), false);
 	}
 
 	public void toggleKey(int keyCode, boolean isPressed) {
-		// WSAD controls
+		// WSAD and Arrow-key controls
 		if (keyCode == KeyEvent.VK_W) {
 			up.toggle(isPressed);
 		}
