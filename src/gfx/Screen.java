@@ -34,8 +34,11 @@ public class Screen {
 				 * 23 in binary:  0 0 0 1 0 1 1 1 
 				 * result in bin: 0 0 0 0 0 1 0 1 = 5 (in decimal)
 				 *****************************************************************/
-				
 	public void render(int xPos, int yPos, int tile, int color){
+		render(xPos, yPos, tile, color, false, false);
+	}
+	
+	public void render(int xPos, int yPos, int tile, int color, boolean mirrorX, boolean mirrorY){
 		xPos -= xOffset;
 		yPos -= yOffset;
 		
@@ -44,16 +47,18 @@ public class Screen {
 		int tileOffset = (xTile << 3) + (yTile << 3) * sheet.getWidth();
 		
 		for(int y = 0; y < 8; y++){
-			if(y + yPos < 0 || y + yPos >= height) continue;
 			int ySheet = y;
+			if(mirrorY) ySheet = 7 - y;
+			if(y + yPos < 0 || y + yPos >= height) continue;
 			
 			for(int x = 0; x < 8; x++){
-				if(x + yPos < 0 || x+ xPos >= height) continue;
 				int xSheet = x;
+				if(mirrorX) xSheet = 7 - x;
+				if(x + yPos < 0 || x+ xPos >= height) continue;
+				
 				int col = (color >> (sheet.getPixels()[xSheet + ySheet * sheet.getWidth() + tileOffset] * 8)) & 255;
-				if(col < 255){
-					pixels[(x+xPos) + (y + yPos) * width] = col;
-				}
+				if(col < 255)
+					pixels[(x + xPos) + (y + yPos) * width] = col;
 			}
 		}
 	}
