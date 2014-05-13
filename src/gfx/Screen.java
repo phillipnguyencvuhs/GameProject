@@ -34,6 +34,7 @@ public class Screen {
 				 * 23 in binary:  0 0 0 1 0 1 1 1 
 				 * result in bin: 0 0 0 0 0 1 0 1 = 5 (in decimal)
 				 *****************************************************************/
+	
 	public void render(int xPos, int yPos, int tile, int color){
 		render(xPos, yPos, tile, color, false, false);
 	}
