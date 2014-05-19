@@ -142,13 +142,6 @@ public class GameRunner extends Canvas implements Runnable {
 			return;
 		}
 			
-		for(int y = 0; y < 32; y++){
-			for(int x = 0; x < 32; x++){
-				boolean flipX = x % 2 == 1;
-				boolean flipY = y % 2 == 1;
-				screen.render(x << 3, y << 3, 0, Colors.get(555, 505, 055, 550), flipX, flipY );
-			}
-		}
 		
 		String msg = "This is our game!";
 		Font.render(msg, screen,screen.xOffset +screen.width/2, screen.yOffset+screen.height/2 - (msg.length()*8/2), Colors.get(-1, -1, -1, 000));
