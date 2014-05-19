@@ -4,7 +4,7 @@ import java.awt.image.*;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-//test
+
 public class SpriteSheet {
 
 	private String path;
