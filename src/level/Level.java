@@ -1,6 +1,6 @@
 package level;
 
-import tiles.Tile;
+import tiles.*;
 import gfx.*;
 
 public class Level {
@@ -20,10 +20,18 @@ public class Level {
 	public void generateLevel(){
 		for(int y = 0; y < height; y++){
 			for(int x = 0; x < width; x++){
-				tiles[x + y * width] = Tile.GRASS.getID();
-				
+				if(x * y % 10 < 5){
+					tiles[x + y * width] = Tile.GRASS.getId();
+				}
+				else{
+					tiles[x + y * width] = Tile.STONE.getId();
+				}
 			}
 		}
+	}
+	
+	public void tick(){
+		
 	}
 	
 	public void renderTiles(Screen screen, int xOffset, int yOffset){
@@ -43,11 +51,11 @@ public class Level {
 				getTile(x, y).render(screen, this, x << 3, y << 3);
 			}
 		}
-		
+	}
 		private Tile getTile(int x, int y){
 			if (x < 0 || x > width || y < 0 || y > height)
 				return Tile.VOID; 
 			return Tile.tiles[tile[x + y * width]];
 		}
 	}
-}
+

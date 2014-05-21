@@ -2,6 +2,8 @@ package Main;
 
 import gfx.*;
 import gfx.Font;
+import tiles.*;
+import level.*;
 import java.awt.*;
 import java.awt.image.*;
 
@@ -27,6 +29,7 @@ public class GameRunner extends Canvas implements Runnable {
 
 	public Screen screen;
 	public InputHandler input;
+	public Level level;
 
 	public GameRunner() {
 		setMinimumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
@@ -59,6 +62,7 @@ public class GameRunner extends Canvas implements Runnable {
 		
 		screen = new Screen(WIDTH, HEIGHT, new SpriteSheet("/sprite_sheet.png"));
 		input = new InputHandler(this);
+		level = new Level(64, 64);
 	}
 
 	public synchronized void start() {
@@ -114,23 +118,27 @@ public class GameRunner extends Canvas implements Runnable {
 			}
 		}
 	}
+	
+	private int x = 0;
+	private int y = 0;
 
 	// tick method updates the entire game
 	public void tick() {
 		tickcount++;
 		//the following should move the entire screen...
 		if (input.up.isPressed()) {
-			screen.yOffset--;
+			y--;
 		}
 		if (input.down.isPressed()) {
-			screen.yOffset++;
+			y++;
 		}
 		if (input.left.isPressed()) {
-			screen.xOffset--;
+			x--;
 		}
 		if (input.right.isPressed()) {
-			screen.xOffset++;
+			x++;
 		}
+		level.tick();
 	}
 
 	// print out the updates
@@ -141,7 +149,18 @@ public class GameRunner extends Canvas implements Runnable {
 			createBufferStrategy(3); // enables triple buffering
 			return;
 		}
-			
+		
+		int xOffset = x - (screen.xOffset / 2);
+		int yOffset = y - (screen.yOffset / 2);
+		
+		level.renderTiles(screen, xOffset, yOffset);
+		
+		for(int x = 0; x < level.width; x++){
+			int color = Colors.get(-1, -1, -1, 000);
+			if(x % 10 == 0 && x != 0)
+				color = Colors.get(-1,-1,-1, 500);
+			Font.render((x % 10) + "", screen, 0 + (x*8), 0, color);
+		}
 		
 		String msg = "This is our game!";
 		Font.render(msg, screen,screen.xOffset +screen.width/2, screen.yOffset+screen.height/2 - (msg.length()*8/2), Colors.get(-1, -1, -1, 000));
