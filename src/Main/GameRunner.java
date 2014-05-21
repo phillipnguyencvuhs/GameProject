@@ -118,19 +118,7 @@ public class GameRunner extends Canvas implements Runnable {
 	// tick method updates the entire game
 	public void tick() {
 		tickcount++;
-		//the following should move the entire screen...
-		if (input.up.isPressed()) {
-			screen.yOffset--;
-		}
-		if (input.down.isPressed()) {
-			screen.yOffset++;
-		}
-		if (input.left.isPressed()) {
-			screen.xOffset--;
-		}
-		if (input.right.isPressed()) {
-			screen.xOffset++;
-		}
+		
 	}
 
 	// print out the updates
