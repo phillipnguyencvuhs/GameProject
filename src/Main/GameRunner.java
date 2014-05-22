@@ -146,13 +146,6 @@ public class GameRunner extends Canvas implements Runnable {
 		level.renderTiles(screen, xOffset, yOffset);
 		level.renderEntities(screen);
 		
-		for (int x = 0; x < level.width; x++) {
-			int color = Colors.get(-1, -1, -1, 000);
-			if (x % 10 == 0 && x != 0)
-				color = Colors.get(-1, -1, -1, 500);
-			Font.render((x % 10) + "", screen, 0 + (x * 8), 0, color);
-		}
-		
 		for (int y = 0; y < screen.height; y++) {
 			for (int x = 0; x < screen.width; x++) {
 				int colorCode = screen.pixels[x + y * screen.width];

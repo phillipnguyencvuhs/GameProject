@@ -39,6 +39,7 @@ public class Player extends Mob {
 		} else {
 			isMoving = false;
 		}
+		this.scale = 1;
 	}
 
 	public void render(Screen screen) {
@@ -53,12 +54,12 @@ public class Player extends Mob {
 		
 		/* multiply by 32 to get actual tile in sprite sheet*/
 		//upper body of player
-		screen.render(xOffset, yOffset, xTile + yTile * 32, color);
-		screen.render(xOffset + modifier, yOffset, (xTile + 1) + yTile * 32, color);
+		screen.render(xOffset, yOffset, xTile + yTile * 32, color, 0x00, scale);
+		screen.render(xOffset + modifier, yOffset, (xTile + 1) + yTile * 32, color, 0x00, scale);
 		
 		//lower body of player
-		screen.render(xOffset, yOffset + modifier, xTile + (yTile + 1) * 32, color);
-		screen.render(xOffset + modifier, yOffset, (xTile + 1) + (yTile + 1) * 32, color);
+		screen.render(xOffset, yOffset + modifier, xTile + (yTile + 1) * 32, color, 0x00, scale);
+		screen.render(xOffset + modifier, yOffset + modifier, (xTile + 1) + (yTile + 1) * 32, color, 0x00, scale);
 		
 	}
 

@@ -42,11 +42,7 @@ public class Screen {
 	 * bin: 0 0 0 0 0 1 0 1 = 5 (in decimal)
 	 *****************************************************************/
 
-	public void render(int xPos, int yPos, int tile, int color) {
-		render(xPos, yPos, tile, color, 0x00);
-	}
-
-	public void render(int xPos, int yPos, int tile, int color, int mirrorDir) {
+	public void render(int xPos, int yPos, int tile, int color, int mirrorDir, int scale) {
 
 		/*******************************************************
 		 * Using bits to determine location (using two bits): This is so we
@@ -64,7 +60,8 @@ public class Screen {
 		 * that it will move x
 		 */
 		boolean mirrorY = (mirrorDir & BIT_MIRROR_Y) > 0;
-
+		
+		int scaleMap = scale -1;
 		int xTile = tile % 32;
 		int yTile = tile / 32;
 		int tileOffset = (xTile << 3) + (yTile << 3) * sheet.width;
@@ -73,24 +70,32 @@ public class Screen {
 			int ySheet = y;
 			if (mirrorY)
 				ySheet = 7 - y;
-			if (y + yPos < 0 || y + yPos >= height) {
-				continue;
-			}
+			
+			int yPixel = y + yPos + (y * scaleMap) - ((scaleMap << 3)/2);
+			
 
 			for (int x = 0; x < 8; x++) {
 				int xSheet = x;
 				if (mirrorX)
 					xSheet = 7 - x;
-				if (x + yPos < 0 || x + xPos >= width) {
-					continue;
-				}
+				
+				int xPixel = x + xPos + (x * scaleMap) - ((scaleMap << 3)/2);
 
 				// verify it is between 0 and 255
 				int col = (color >> (sheet.pixels[xSheet + ySheet
 						* sheet.width + tileOffset] * 8)) & 255;
 
-				if (col < 255)
-					pixels[(x + xPos) + (y + yPos) * width] = col;
+				if (col < 255) {
+					for (int yScale = 0; yScale < scale; yScale++){
+					if (yPixel + yScale < 0 || yPixel + yScale >= height)
+						continue;
+						for (int xScale = 0; xScale < scale; xScale++) {
+							if (xPixel + xScale < 0 || xPixel + xScale >= width) 
+								continue;
+							pixels[(xPixel + xScale) + (yPixel + yScale) * width] = col;
+						}
+					}	
+				}
 			}
 		}
 	}
