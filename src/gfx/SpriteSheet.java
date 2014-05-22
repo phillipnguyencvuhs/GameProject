@@ -7,15 +7,15 @@ import javax.imageio.ImageIO;
 //test
 public class SpriteSheet {
 
-	private String path;
-	private int width;
-	private int height;
-	private int[] pixels;
+	public String path;
+	public int width;
+	public int height;
+	public int[] pixels;
 
 	public SpriteSheet(String path) {
 		BufferedImage image = null;
 		try {
-			image = ImageIO.read(SpriteSheet.class.getResource(path));
+			image = ImageIO.read(SpriteSheet.class.getResourceAsStream(path));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -52,21 +52,5 @@ public class SpriteSheet {
 		for (int i = 0; i < 8; i++) {
 			System.out.println(pixels[i]);
 		}
-	}
-
-	public int[] getPixels(){
-		return pixels;
-	}
-
-	public int getWidth(){
-		return width;
-	}
-
-	public int getHeight(){
-		return height;
-	}
-
-	public String path(){
-		return path;
 	}
 }
