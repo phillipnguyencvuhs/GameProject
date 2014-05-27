@@ -23,11 +23,12 @@ public class Level {
 	public void generateLevel() {
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
-				if (x * y % 10 < 5) {
-					tiles[x + y * width] = Tile.GRASS.getId();
-				} else {
-					tiles[x + y * width] = Tile.STONE.getId();
-				}
+				tiles[x + y * width] = Tile.GRASS.getId();
+				/*
+				 * if (x * y % 10 < 5) { tiles[x + y * width] =
+				 * Tile.GRASS.getId(); } else { tiles[x + y * width] =
+				 * Tile.STONE.getId(); }
+				 */
 			}
 		}
 	}
@@ -62,14 +63,14 @@ public class Level {
 			e.render(screen);
 		}
 	}
-	
+
 	private Tile getTile(int x, int y) {
 		if (x < 0 || x > width || y < 0 || y > height)
 			return Tile.VOID;
 		return Tile.tiles[tiles[x + y * width]];
 	}
-	
-	public void addEntity(Entity entity){
+
+	public void addEntity(Entity entity) {
 		this.entities.add(entity);
 	}
 }
