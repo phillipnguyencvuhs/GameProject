@@ -11,6 +11,7 @@ public class Player extends Mob {
 	private int color = Colors.get(-1, 111, 145, 543);
 	
 	public Player(Level level, int x, int y, InputHandler input) {
+		// creates the player
 		super(level, "Player", x, y, 1);
 		this.input = input;
 	}
@@ -46,6 +47,18 @@ public class Player extends Mob {
 		//location of player on sprite sheet (first tile)
 		int xTile = 0; 
 		int yTile = 28;
+		int walkingSpeed = 3;
+		int flipTop = (numSteps >> walkingSpeed) & 1;
+		int flipBottom = (numSteps >> walkingSpeed) & 1;
+		
+		if (movingDir == 1){
+			xTile += 2;
+		}
+		
+		else if (movingDir > 1){
+			xTile += 4 + ((numSteps >> walkingSpeed) & 1) * 2;
+			flipTop = (movingDir - 1) % 2;
+		}
 		
 		//modifier variable
 		int modifier = 8 * scale;
@@ -54,12 +67,12 @@ public class Player extends Mob {
 		
 		/* multiply by 32 to get actual tile in sprite sheet*/
 		//upper body of player
-		screen.render(xOffset, yOffset, xTile + yTile * 32, color, 0x00, scale);
-		screen.render(xOffset + modifier, yOffset, (xTile + 1) + yTile * 32, color, 0x00, scale);
+		screen.render(xOffset + (modifier * flipTop), yOffset, xTile + yTile * 32, color, flipTop, scale);
+		screen.render(xOffset + modifier - (modifier * flipTop), yOffset, (xTile + 1) + yTile * 32, color, flipTop, scale);
 		
 		//lower body of player
-		screen.render(xOffset, yOffset + modifier, xTile + (yTile + 1) * 32, color, 0x00, scale);
-		screen.render(xOffset + modifier, yOffset + modifier, (xTile + 1) + (yTile + 1) * 32, color, 0x00, scale);
+		screen.render(xOffset + (modifier * flipBottom), yOffset + modifier, xTile + (yTile + 1) * 32, color, flipBottom, scale);
+		screen.render(xOffset + modifier - (modifier * flipBottom), yOffset + modifier, (xTile + 1) + (yTile + 1) * 32, color, flipBottom, scale);
 		
 	}
 
