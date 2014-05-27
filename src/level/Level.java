@@ -1,7 +1,13 @@
 package level;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.imageio.ImageIO;
+
 import entities.Entity;
 import tiles.*;
 import gfx.*;
@@ -9,27 +15,69 @@ import gfx.*;
 public class Level {
 
 	private byte[] tiles;
+	private String imagePath;
+	private BufferedImage image;
 	public int width;
 	public int height;
 	public List<Entity> entities = new ArrayList<Entity>();
 
-	public Level(int width, int height) {
+	public Level(String imagePath) {
+		if(imagePath != null){
+			this.imagePath = imagePath;
+			this.loadLevelFromFile();
+		}
+		else{
 		tiles = new byte[width * height];
 		this.width = width;
 		this.height = height;
 		this.generateLevel();
+		}
 	}
-
+	
+	private void loadLevelFromFile(){
+		try{
+			this.image = ImageIO.read(Level.class.getResource(this.imagePath));
+			this.width = image.getWidth();
+			this.height = image.getHeight();
+			tiles = new byte[width * height];
+			this.loadTiles();
+		}
+		catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+	
+	private void loadTiles(){
+		int[] tileColors = this.image.getRGB(0, 0, width, height, null, 0, width);
+		for(int y = 0; y < height; y++){
+			for(int x = 0; x < width; x++){
+				for(Tile t: Tile.tiles){
+					if (t.getLevelColor() == tileColors[x + y * width])
+						this.tiles[x + y * width] = t.getId();
+				}
+			}
+		}
+	}
+	
+	public void saveLevelToFile(){
+		try{
+			ImageIO.write(image, "png", new File(Level.class.getResource(this.imagePath).getFile()));
+		}
+		catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void alterTile(int x, int y, Tile newTile){
+		this.tiles[x + y * width] = newTile.getId();
+		image.setRGB(x, y, newTile.getLevelColor());
+	}
+	
 	public void generateLevel() {
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
-				tiles[x + y * width] = Tile.GRASS.getId();
-				/*
-				 * if (x * y % 10 < 5) { tiles[x + y * width] =
-				 * Tile.GRASS.getId(); } else { tiles[x + y * width] =
-				 * Tile.STONE.getId(); }
-				 */
-			}
+					  tiles[x + y * width] = Tile.GRASS.getId(); 
+			} 
 		}
 	}
 
@@ -64,8 +112,8 @@ public class Level {
 		}
 	}
 
-	private Tile getTile(int x, int y) {
-		if (x < 0 || x > width || y < 0 || y > height)
+	public Tile getTile(int x, int y) {
+		if (0 > x || x >= width || 0 > y || y >= height)
 			return Tile.VOID;
 		return Tile.tiles[tiles[x + y * width]];
 	}

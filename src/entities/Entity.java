@@ -6,7 +6,7 @@ import level.Level;
 public abstract class Entity {
 
 	public int x, y;
-	private Level level;
+	protected Level level;
 	
 	public Entity(Level level){
 		init(level);
