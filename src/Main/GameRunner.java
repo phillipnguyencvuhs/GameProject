@@ -16,7 +16,7 @@ public class GameRunner extends Canvas implements Runnable {
 	public static final int WIDTH = 160;
 	public static final int HEIGHT = WIDTH / 12 * 9;
 	public static int SCALE = 3;
-	public static final String NAME = "placeholder name";
+	public static final String NAME = "Final Project";
 
 	private JFrame frame;
 	public boolean running = true;
@@ -66,7 +66,7 @@ public class GameRunner extends Canvas implements Runnable {
 
 		screen = new Screen(WIDTH, HEIGHT, new SpriteSheet("/sprite_sheet.png"));
 		input = new InputHandler(this);
-		level = new Level(64, 64);
+		level = new Level("/levels/small_underscore_levels.png");
 		player = new Player(level, 0, 0, input);
 		level.addEntity(player);
 	}
