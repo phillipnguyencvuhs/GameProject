@@ -1,5 +1,6 @@
 package entities;
 
+import tiles.Tile;
 import level.Level;
 
 //framework for all moving characters/objects
@@ -51,6 +52,17 @@ public abstract class Mob extends Entity {
 	}
 
 	public abstract boolean hasCollided(int xa, int ya);
+	
+	protected boolean isSolidTile(int xa, int ya, int x, int y){
+		if(level == null) 
+			return false;
+		Tile lastTile = level.getTile((this.x + x) >> 3, (this.y + y) >> 3);
+		Tile newTile = level.getTile((this.x + x + xa) >> 3, (this.y + y + ya) >> 3);
+		if(!lastTile. equals(newTile) && newTile.isSolid())
+			return true;
+		
+		return false;
+	}
 
 	public String getName() {
 		return name;
