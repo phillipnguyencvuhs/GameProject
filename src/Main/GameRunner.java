@@ -5,23 +5,20 @@ import gfx.*;
 import gfx.Font;
 import tiles.*;
 import level.*;
-
 import java.awt.*;
 import java.awt.image.*;
-import java.io.File;
-import java.io.IOException;
 import java.util.Random;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
+
+// 6/1/2014: 932 lines of code
 
 public class GameRunner extends Canvas implements Runnable {
 
 	private static final long serialVersionUID = 1L;
-	//random number generator
+	// random number generator
 	private Random rn = new Random();
-	
-	//project setup (size and name)
+
+	// project setup (size and name)
 	public static final int WIDTH = 160;
 	public static final int HEIGHT = WIDTH / 12 * 9;
 	public static int SCALE = 3;
@@ -30,50 +27,44 @@ public class GameRunner extends Canvas implements Runnable {
 	private JFrame frame;
 	public boolean running = true;
 	public int tickcount = 0;
-	
-	/*
-	private BufferedImage dead;
 
-	private void assignDead(){
-	try {
-	dead = ImageIO.read(new File("C:\\Users\\Phillip\\workspace\\GameProject\\res\\dead.png"));
-	} catch(Exception e){
-	}
-	} */
-	
+	/*
+	 * private BufferedImage dead;
+	 * 
+	 * private void assignDead(){ try { dead = ImageIO.read(new
+	 * File("C:\\Users\\Phillip\\workspace\\GameProject\\res\\dead.png")); }
+	 * catch(Exception e){ } }
+	 */
+
 	Image dead;
-	
+
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT,
 			BufferedImage.TYPE_INT_RGB);
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer())
 			.getData(); // represents how many pixels are inside image
-	private int[] colors = new int[6*6*6]; // 216 is from amount of colors we want
-											// (36) times 6 for RGB
-	//make basic things required for game
+	private int[] colors = new int[6 * 6 * 6]; // 216 is from amount of colors
+												// we want
+												// (36) times 6 for RGB
+	// make basic things required for game
 	public Screen screen;
 	public InputHandler input;
 	public Level level;
 	public Player player;
-	
-	//a list of the names of the level files
-	public String[] list = {
-			"/large_level.png", 
-			"/large_maze_level.png", 
-			"/medium_level.png",
-			"/small_level.png", 
-			"/small_maze_level.png",
-		};
-	
-	//randomly chose a level
-	public String select = list[(rn.nextInt(4)+1)];
+
+	// a list of the names of the level files
+	public String[] list = { "/large_level.png", "/large_maze_level.png",
+			"/medium_level.png", "/small_level.png", "/small_maze_level.png", };
+
+	// randomly chose a level
+	public String select = list[(rn.nextInt(4) + 1)];
 
 	public GameRunner() {
-		//the size is set to the values initialized above
+		// the size is set to the values initialized above
 		setMinimumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		setMaximumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
-		
-		//setting up JFrame
+
+		// setting up JFrame
 		frame = new JFrame(NAME);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
@@ -85,7 +76,7 @@ public class GameRunner extends Canvas implements Runnable {
 	}
 
 	public void init() {
-		//assignDead();
+		// assignDead();
 		int index = 0;
 		for (int r = 0; r < 6; r++) {
 			for (int g = 0; g < 6; g++) {
@@ -101,14 +92,15 @@ public class GameRunner extends Canvas implements Runnable {
 
 		screen = new Screen(WIDTH, HEIGHT, new SpriteSheet("/sprite_sheet.png"));
 		input = new InputHandler(this);
-		
-		//print out the name of the selected level in console for debugging purposes
+
+		// print out the name of the selected level in console for debugging
+		// purposes
 		System.out.println(select);
-		//constructs the level
+		// constructs the level
 		level = new Level(select);
-		//makes a player with coordinates 0,0 and basic controls
+		// makes a player with coordinates 0,0 and basic controls
 		player = new Player(level, 0, 0, input);
-		//puts player into level
+		// puts player into level
 		level.addEntity(player);
 	}
 
@@ -168,6 +160,7 @@ public class GameRunner extends Canvas implements Runnable {
 
 	// tick method updates the entire game
 	public void tick() {
+		player.setHealth(player.getHealth()-1);
 		tickcount++;
 		level.tick();
 	}
@@ -180,41 +173,56 @@ public class GameRunner extends Canvas implements Runnable {
 			createBufferStrategy(3); // enables triple buffering
 			return;
 		}
-		
-		if(player.getHealth() > 0){
-		int xOffset = player.x - (screen.width / 2);
-		int yOffset = player.y - (screen.height / 2);
 
-		level.renderTiles(screen, xOffset, yOffset);
-		level.renderEntities(screen);
-		
-		for (int y = 0; y < screen.height; y++) {
-			for (int x = 0; x < screen.width; x++) {
-				int colorCode = screen.pixels[x + y * screen.width];
-				if (colorCode < 255)
-					pixels[x + y * WIDTH] = colors[colorCode];
+		// renders game if player is alive
+		if (player.getHealth() > 0) {
+
+			int xOffset = player.x - (screen.width / 2);
+			int yOffset = player.y - (screen.height / 2);
+
+			level.renderTiles(screen, xOffset, yOffset);
+			level.renderEntities(screen);
+
+			for (int y = 0; y < screen.height; y++) {
+				for (int x = 0; x < screen.width; x++) {
+					int colorCode = screen.pixels[x + y * screen.width];
+					if (colorCode < 255)
+						pixels[x + y * WIDTH] = colors[colorCode];
+				}
 			}
+
+			Graphics g = bs.getDrawGraphics();
+			g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+			g.dispose(); // free up memory
+			bs.show(); // show contents of the buffer
 		}
-		
-		Graphics g = bs.getDrawGraphics();
-		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
-		g.dispose(); // free up memory
-		bs.show(); // show contents of the buffer
-		} else{
-			dead = new ImageIcon("res/dead.png").getImage(); //assign death image
-			repaint(); 
+		// renders death screen when player is dead
+		else {
+			// assign death image
+			dead = new ImageIcon("res/dead.png").getImage();
+			repaint();
 			stop();
 		}
 	}
-	
-	//draws death image under the game, blank until health = 0
-	public void paint(Graphics g){
-		BufferedImage thumbImage = new BufferedImage(WIDTH*SCALE+10,HEIGHT*SCALE+10,BufferedImage.TYPE_INT_RGB);
+
+	// draws death image under the game
+	public void paint(Graphics g) {
+
+		/************************************************************
+		 * This was the only method of adding an image I could find 
+		 * that actually works with this project. The death image is 
+		 * blank until the players health reaches 0, otherwise it 
+		 * would show the image when the game starts up.
+		 ************************************************************/
+		
+		BufferedImage thumbImage = new BufferedImage(WIDTH * SCALE + 10, HEIGHT
+				* SCALE + 10, BufferedImage.TYPE_INT_RGB);
 		Graphics2D graphics2D = thumbImage.createGraphics();
-		graphics2D.drawImage(dead, 0, 0, WIDTH*SCALE+10, HEIGHT*SCALE+10, null);
+		graphics2D.drawImage(dead, 0, 0, WIDTH * SCALE + 10, HEIGHT * SCALE
+				+ 10, null);
 		g.drawImage(thumbImage, 0, 0, this);
 	}
-	
+
 	public static void main(String[] args) {
 		new GameRunner().start();
 	}
