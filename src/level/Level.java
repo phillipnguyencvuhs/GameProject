@@ -108,6 +108,7 @@ public class Level {
 		}
 	}
 
+	//renders all the entities onto the screen
 	public void renderEntities(Screen screen) {
 		for (Entity e : entities) {
 			e.render(screen);

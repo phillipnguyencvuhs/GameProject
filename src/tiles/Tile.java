@@ -21,7 +21,7 @@ public abstract class Tile {
 			0, -1), 0xFF555555);
 	public static final Tile FLOOR = new BasicTile(2, 2, 0, Colors.get(-1, 181,
 			171, -1), 0xFFFFFFFF);
-	public static final Tile SPIKE = new SpikeTile(3, 4, 0, Colors.get(-1, 333, -1, -1), 0xFF9a9a9a);
+	public static final Tile SPIKE = new SpikeTile(3, 4, 0, Colors.get(-1, 181, 171, 333), 0xFF9a9a9a);
 
 	protected byte id; // telling what is what
 	protected boolean solid; // for collision detection
