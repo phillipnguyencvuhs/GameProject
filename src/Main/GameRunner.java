@@ -8,8 +8,11 @@ import level.*;
 
 import java.awt.*;
 import java.awt.image.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class GameRunner extends Canvas implements Runnable {
@@ -27,7 +30,19 @@ public class GameRunner extends Canvas implements Runnable {
 	private JFrame frame;
 	public boolean running = true;
 	public int tickcount = 0;
+	
+	/*
+	private BufferedImage dead;
 
+	private void assignDead(){
+	try {
+	dead = ImageIO.read(new File("C:\\Users\\Phillip\\workspace\\GameProject\\res\\dead.png"));
+	} catch(Exception e){
+	}
+	} */
+	
+	Image dead;
+	
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT,
 			BufferedImage.TYPE_INT_RGB);
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer())
@@ -70,6 +85,7 @@ public class GameRunner extends Canvas implements Runnable {
 	}
 
 	public void init() {
+		//assignDead();
 		int index = 0;
 		for (int r = 0; r < 6; r++) {
 			for (int g = 0; g < 6; g++) {
@@ -164,7 +180,8 @@ public class GameRunner extends Canvas implements Runnable {
 			createBufferStrategy(3); // enables triple buffering
 			return;
 		}
-
+		
+		if(player.getHealth() > 0){
 		int xOffset = player.x - (screen.width / 2);
 		int yOffset = player.y - (screen.height / 2);
 
@@ -183,8 +200,21 @@ public class GameRunner extends Canvas implements Runnable {
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 		g.dispose(); // free up memory
 		bs.show(); // show contents of the buffer
+		} else{
+			dead = new ImageIcon("res/dead.png").getImage(); //assign death image
+			repaint(); 
+			stop();
+		}
 	}
-
+	
+	//draws death image under the game, blank until health = 0
+	public void paint(Graphics g){
+		BufferedImage thumbImage = new BufferedImage(WIDTH*SCALE+10,HEIGHT*SCALE+10,BufferedImage.TYPE_INT_RGB);
+		Graphics2D graphics2D = thumbImage.createGraphics();
+		graphics2D.drawImage(dead, 0, 0, WIDTH*SCALE+10, HEIGHT*SCALE+10, null);
+		g.drawImage(thumbImage, 0, 0, this);
+	}
+	
 	public static void main(String[] args) {
 		new GameRunner().start();
 	}
