@@ -86,7 +86,7 @@ public class Player extends Mob {
 			life = "#";
 		}
 		
-		Font.render(life, screen, xOffset - (life.length() - 5), yOffset - 10, Colors.get(-1, -1, -1, 257), 1);
+		Font.render(life, screen, xOffset - 5, yOffset - 10, Colors.get(-1, -1, -1, 257), 1);
 	}
 
 	public boolean hasCollided(int xa, int ya) {
@@ -132,8 +132,6 @@ public class Player extends Mob {
 		}
 		return false;
 	}
-	
-	
 	
 	public static int getHealth(){
 		return health;
