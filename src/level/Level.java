@@ -14,7 +14,7 @@ import gfx.*;
 
 public class Level {
 
-	private byte[] tiles;
+	private byte[] tiles; //represents the id of the tile
 	private String imagePath;
 	private BufferedImage image;
 	public int width;
@@ -27,9 +27,9 @@ public class Level {
 			this.loadLevelFromFile();
 		}
 		else{
-		tiles = new byte[width * height];
 		this.width = width;
 		this.height = height;
+		tiles = new byte[width * height];
 		this.generateLevel();
 		}
 	}
@@ -51,10 +51,9 @@ public class Level {
 		int[] tileColors = this.image.getRGB(0, 0, width, height, null, 0, width);
 		for(int y = 0; y < height; y++){
 			for(int x = 0; x < width; x++){
-			tileCheck: for(Tile t: Tile.tiles){
+			  for(Tile t: Tile.tiles){
 					if (t != null  && t.getLevelColor() == tileColors[x + y * width])
 						this.tiles[x + y * width] = t.getId();
-					break tileCheck;
 				}
 			}
 		}

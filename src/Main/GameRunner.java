@@ -66,7 +66,7 @@ public class GameRunner extends Canvas implements Runnable {
 
 		screen = new Screen(WIDTH, HEIGHT, new SpriteSheet("/sprite_sheet.png"));
 		input = new InputHandler(this);
-		level = new Level("/levels/small_underscore_levels.png");
+		level = new Level("/small_test_level.png");
 		player = new Player(level, 0, 0, input);
 		level.addEntity(player);
 	}
