@@ -56,7 +56,7 @@ public class GameRunner extends Canvas implements Runnable {
 			"/medium_level.png", "/small_level.png", "/small_maze_level.png", };
 
 	// randomly chose a level
-	public String select = list[(rn.nextInt(4) + 1)];
+	public String select = list[(rn.nextInt(4))];
 
 	public GameRunner() {
 		// the size is set to the values initialized above
@@ -160,7 +160,6 @@ public class GameRunner extends Canvas implements Runnable {
 
 	// tick method updates the entire game
 	public void tick() {
-		player.setHealth(player.getHealth()-1);
 		tickcount++;
 		level.tick();
 	}
