@@ -85,6 +85,7 @@ public class Player extends Mob {
 		int xMax = 7;
 		int yMin = 3;
 		int yMax = 7;
+		
 		// For Solid Detection 
 		for(int x = xMin; x < xMax; x++ ){
 			if(isSolidTile(xa, ya, x, yMin))
@@ -102,32 +103,36 @@ public class Player extends Mob {
 			if(isSolidTile(xa, ya, xMax, y))
 				return true;
 		}
-		// For Spike Detection
 		
+		// For Spike Detection
 		for(int x = xMin; x < xMax; x++ ){
 			if(isSpikeTile(xa, ya, x, yMin))
-				return true;
+				return false;
 		}
 		for(int x = xMin; x < xMax; x++ ){
 			if(isSpikeTile(xa, ya, x, yMax))
-				return true;
+				return false;
 		}
 		for(int y = yMin; y < yMax; y++ ){
 			if(isSpikeTile(xa, ya, xMin, y))
-				return true;
+				return false;
 		}
 		for(int y = yMin; y < yMax; y++ ){
 			if(isSpikeTile(xa, ya, xMax, y))
-				return true;
+				return false;
 		}
 		return false;
 	}
 	
 	public static int getHealth(){
 		return health;
+		
+		// We made this static so it is accessible from the Mob class
 	}
 	
 	public static void setHealth(int Health){
 		health = Health;
+		
+		// It's static for the same reason as getHealth
 	}
 }
