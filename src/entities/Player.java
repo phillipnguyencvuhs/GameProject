@@ -11,8 +11,9 @@ public class Player extends Mob {
 	private InputHandler input;
 	private int color = Colors.get(-1, 111, 300, 543);
 
-	public static int health = 3;
+	public static int health = 2;
 	private String life = ("###");
+	private int adjustment = 5;
 	
 	public Player(Level level, int x, int y, InputHandler input) {
 		// creates the player
@@ -80,13 +81,16 @@ public class Player extends Mob {
 		
 		if(health == 3){
 			life = "###";
+			adjustment = 5;
 		} else if(health == 2){
 			life = "##";
+			adjustment = 0;
 		} else if(health == 1){
 			life = "#";
+			adjustment = -3;
 		}
 		
-		Font.render(life, screen, xOffset - 5, yOffset - 10, Colors.get(-1, -1, -1, 257), 1);
+		Font.render(life, screen, xOffset - adjustment, yOffset - 10, Colors.get(-1, -1, -1, 257), 1);
 	}
 
 	public boolean hasCollided(int xa, int ya) {
