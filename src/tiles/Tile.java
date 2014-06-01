@@ -12,8 +12,9 @@ public abstract class Tile {
 			-1, -1), 0xFF555555);
 	public static final Tile GRASS = new BasicTile(2, 2, 0, Colors.get(-1, 131,
 			141, -1), 0xFF00FF00);
+	public static final Tile SPIKE = new SpikeTIle(3, 3, 0, Colors.get(-1, 333, -1, -1), );
 
-	protected byte id;
+	protected byte id; // telling what is what
 	protected boolean solid; // for collision detection
 	protected boolean emitter; // for light
 	
