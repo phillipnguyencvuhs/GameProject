@@ -9,7 +9,10 @@ public class Player extends Mob {
 
 	private InputHandler input;
 	private int color = Colors.get(-1, 111, 300, 543);
+
 	public static int health = 5;
+
+
 	
 	public Player(Level level, int x, int y, InputHandler input) {
 		// creates the player
