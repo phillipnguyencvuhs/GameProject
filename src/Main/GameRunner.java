@@ -5,14 +5,20 @@ import gfx.*;
 import gfx.Font;
 import tiles.*;
 import level.*;
+
 import java.awt.*;
 import java.awt.image.*;
+import java.util.Random;
+
 import javax.swing.*;
 
 public class GameRunner extends Canvas implements Runnable {
 
 	private static final long serialVersionUID = 1L;
+	//random number generator
+	private Random rn = new Random();
 	
+	//project setup (size and name)
 	public static final int WIDTH = 160;
 	public static final int HEIGHT = WIDTH / 12 * 9;
 	public static int SCALE = 3;
@@ -28,18 +34,31 @@ public class GameRunner extends Canvas implements Runnable {
 			.getData(); // represents how many pixels are inside image
 	private int[] colors = new int[6*6*6]; // 216 is from amount of colors we want
 											// (36) times 6 for RGB
-
+	//make basic things required for game
 	public Screen screen;
 	public InputHandler input;
 	public Level level;
-
 	public Player player;
+	
+	//a list of the names of the level files
+	public String[] list = {
+			"/large_level.png", 
+			"/large_maze_level.png", 
+			"/medium_level.png",
+			"/small_level.png", 
+			"/small_maze_level.png",
+		};
+	
+	//randomly chose a level
+	public String select = list[(rn.nextInt(4)+1)];
 
 	public GameRunner() {
+		//the size is set to the values initialized above
 		setMinimumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		setMaximumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
-
+		
+		//setting up JFrame
 		frame = new JFrame(NAME);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
@@ -66,8 +85,14 @@ public class GameRunner extends Canvas implements Runnable {
 
 		screen = new Screen(WIDTH, HEIGHT, new SpriteSheet("/sprite_sheet.png"));
 		input = new InputHandler(this);
-		level = new Level("/small_test_level.png");
+		
+		//print out the name of the selected level in console for debugging purposes
+		System.out.println(select);
+		//constructs the level
+		level = new Level(select);
+		//makes a player with coordinates 0,0 and basic controls
 		player = new Player(level, 0, 0, input);
+		//puts player into level
 		level.addEntity(player);
 	}
 
