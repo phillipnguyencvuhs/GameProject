@@ -1,6 +1,7 @@
 package entities;
 
 import gfx.Colors;
+import gfx.Font;
 import gfx.Screen;
 import level.Level;
 import Main.InputHandler;
@@ -10,9 +11,8 @@ public class Player extends Mob {
 	private InputHandler input;
 	private int color = Colors.get(-1, 111, 300, 543);
 
-	public static int health = 5;
-
-
+	public static int health = 3;
+	private String life = ("###");
 	
 	public Player(Level level, int x, int y, InputHandler input) {
 		// creates the player
@@ -78,6 +78,15 @@ public class Player extends Mob {
 		screen.render(xOffset + (modifier * flipBottom), yOffset + modifier, xTile + (yTile + 1) * 32, color, flipBottom, scale);
 		screen.render(xOffset + modifier - (modifier * flipBottom), yOffset + modifier, (xTile + 1) + (yTile + 1) * 32, color, flipBottom, scale);
 		
+		if(health == 3){
+			life = "###";
+		} else if(health == 2){
+			life = "##";
+		} else if(health == 1){
+			life = "#";
+		}
+		
+		Font.render(life, screen, xOffset - (life.length() - 5), yOffset - 10, Colors.get(-1, -1, -1, 257), 1);
 	}
 
 	public boolean hasCollided(int xa, int ya) {
@@ -123,6 +132,8 @@ public class Player extends Mob {
 		}
 		return false;
 	}
+	
+	
 	
 	public static int getHealth(){
 		return health;

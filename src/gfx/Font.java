@@ -2,7 +2,8 @@ package gfx;
 
 public class Font {
 
-	private static String chars = "" + "ABCDEFGHIJKLMNOPQRSTUVWXYZ      "
+	// # is for heart
+	private static String chars = "" + "ABCDEFGHIJKLMNOPQRSTUVWXYZ#     "
 			+ "0123456789.,:;'\"!?$%-=+/      ";
 	//Renders text in the game with a specific location, color, and size
 	public static void render(String msg, Screen screen, int x, int y, int color, int scale){
