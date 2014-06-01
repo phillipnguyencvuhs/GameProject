@@ -78,7 +78,7 @@ public class Level {
 	public void generateLevel() {
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
-					  tiles[x + y * width] = Tile.GRASS.getId(); 
+					  tiles[x + y * width] = Tile.FLOOR.getId(); 
 			} 
 		}
 	}
