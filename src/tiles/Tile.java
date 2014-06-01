@@ -21,11 +21,12 @@ public abstract class Tile {
 			0, -1), 0xFF555555);
 	public static final Tile FLOOR = new BasicTile(2, 2, 0, Colors.get(-1, 181,
 			171, -1), 0xFFFFFFFF);
-	//public static final Tile SPIKE = new SpikeTIle(3, 3, 0, Colors.get(-1, 333, -1, -1), );
+	// public static final Tile SPIKE = new SpikeTIle(3, 3, 0, Colors.get(-1, 333, -1, -1), );
 
 	protected byte id; // telling what is what
 	protected boolean solid; // for collision detection
 	protected boolean emitter; // for light
+	protected boolean spike; // for damage
 	
 	private int levelColor;
 
@@ -47,6 +48,10 @@ public abstract class Tile {
 
 	public boolean isSolid() {
 		return solid;
+	}
+	
+	public boolean isSpike(){
+		return spike;
 	}
 
 	public boolean isEmitter() {

@@ -9,7 +9,7 @@ public class Player extends Mob {
 
 	private InputHandler input;
 	private int color = Colors.get(-1, 111, 300, 543);
-	private int health = 0;
+	public static int health = 5;
 	
 	public Player(Level level, int x, int y, InputHandler input) {
 		// creates the player
@@ -82,6 +82,7 @@ public class Player extends Mob {
 		int xMax = 7;
 		int yMin = 3;
 		int yMax = 7;
+		// For Solid Detection 
 		for(int x = xMin; x < xMax; x++ ){
 			if(isSolidTile(xa, ya, x, yMin))
 				return true;
@@ -98,14 +99,32 @@ public class Player extends Mob {
 			if(isSolidTile(xa, ya, xMax, y))
 				return true;
 		}
+		// For Spike Detection
+		
+		for(int x = xMin; x < xMax; x++ ){
+			if(isSpikeTile(xa, ya, x, yMin))
+				return true;
+		}
+		for(int x = xMin; x < xMax; x++ ){
+			if(isSpikeTile(xa, ya, x, yMax))
+				return true;
+		}
+		for(int y = yMin; y < yMax; y++ ){
+			if(isSpikeTile(xa, ya, xMin, y))
+				return true;
+		}
+		for(int y = yMin; y < yMax; y++ ){
+			if(isSpikeTile(xa, ya, xMax, y))
+				return true;
+		}
 		return false;
 	}
 	
-	public int getHealth(){
+	public static int getHealth(){
 		return health;
 	}
 	
-	public void setHealth(int health){
-		this.health = health;
+	public static void setHealth(int Health){
+		health = Health;
 	}
 }
