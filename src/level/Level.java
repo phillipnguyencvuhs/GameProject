@@ -51,9 +51,11 @@ public class Level {
 		int[] tileColors = this.image.getRGB(0, 0, width, height, null, 0, width);
 		for(int y = 0; y < height; y++){
 			for(int x = 0; x < width; x++){
-			  for(Tile t: Tile.tiles){
-					if (t != null  && t.getLevelColor() == tileColors[x + y * width])
+			  tileCheck: for(Tile t: Tile.tiles){
+					if (t != null  && t.getLevelColor() == tileColors[x + y * width]){
 						this.tiles[x + y * width] = t.getId();
+						break tileCheck; //breaks out of loop
+					}
 				}
 			}
 		}
