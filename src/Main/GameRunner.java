@@ -99,7 +99,7 @@ public class GameRunner extends Canvas implements Runnable {
 		// constructs the level
 		level = new Level(select);
 		// makes a player with coordinates 0,0 and basic controls
-		player = new Player(level, 0, 0, input);
+		player = new Player(level, 10, 10, input);
 		// puts player into level
 		level.addEntity(player);
 	}
