@@ -73,7 +73,6 @@ public class Screen {
 			
 			int yPixel = y + yPos + (y * scaleMap) - ((scaleMap << 3)/2);
 			
-
 			for (int x = 0; x < 8; x++) {
 				int xSheet = x;
 				if (mirrorX)

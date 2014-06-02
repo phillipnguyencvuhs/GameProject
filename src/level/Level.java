@@ -14,7 +14,7 @@ import gfx.*;
 
 public class Level {
 
-	private byte[] tiles;
+	private byte[] tiles; //represents the id of the tile
 	private String imagePath;
 	private BufferedImage image;
 	public int width;
@@ -27,9 +27,9 @@ public class Level {
 			this.loadLevelFromFile();
 		}
 		else{
-		tiles = new byte[width * height];
 		this.width = width;
 		this.height = height;
+		tiles = new byte[width * height];
 		this.generateLevel();
 		}
 	}
@@ -51,9 +51,11 @@ public class Level {
 		int[] tileColors = this.image.getRGB(0, 0, width, height, null, 0, width);
 		for(int y = 0; y < height; y++){
 			for(int x = 0; x < width; x++){
-				for(Tile t: Tile.tiles){
-					if (t.getLevelColor() == tileColors[x + y * width])
+			  tileCheck: for(Tile t: Tile.tiles){
+					if (t != null  && t.getLevelColor() == tileColors[x + y * width]){
 						this.tiles[x + y * width] = t.getId();
+						break tileCheck; //breaks out of loop
+					}
 				}
 			}
 		}
@@ -76,7 +78,7 @@ public class Level {
 	public void generateLevel() {
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
-					  tiles[x + y * width] = Tile.GRASS.getId(); 
+					  tiles[x + y * width] = Tile.FLOOR.getId(); 
 			} 
 		}
 	}
@@ -106,6 +108,7 @@ public class Level {
 		}
 	}
 
+	//renders all the entities onto the screen
 	public void renderEntities(Screen screen) {
 		for (Entity e : entities) {
 			e.render(screen);

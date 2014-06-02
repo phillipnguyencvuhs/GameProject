@@ -1,6 +1,7 @@
 package entities;
 
 import gfx.Colors;
+import gfx.Font;
 import gfx.Screen;
 import level.Level;
 import Main.InputHandler;
@@ -8,7 +9,11 @@ import Main.InputHandler;
 public class Player extends Mob {
 
 	private InputHandler input;
-	private int color = Colors.get(-1, 111, 145, 543);
+	private int color = Colors.get(-1, 111, 300, 543);
+
+	public static int health = 3;
+	private String life = ("###");
+	private int adjustment = 5;
 	
 	public Player(Level level, int x, int y, InputHandler input) {
 		// creates the player
@@ -74,6 +79,18 @@ public class Player extends Mob {
 		screen.render(xOffset + (modifier * flipBottom), yOffset + modifier, xTile + (yTile + 1) * 32, color, flipBottom, scale);
 		screen.render(xOffset + modifier - (modifier * flipBottom), yOffset + modifier, (xTile + 1) + (yTile + 1) * 32, color, flipBottom, scale);
 		
+		if(health == 3){
+			life = "###";
+			adjustment = 5;
+		} else if(health == 2){
+			life = "##";
+			adjustment = 0;
+		} else if(health == 1){
+			life = "#";
+			adjustment = -3;
+		}
+		
+		Font.render(life, screen, xOffset - adjustment, yOffset - 10, Colors.get(-1, -1, -1, 257), 1);
 	}
 
 	public boolean hasCollided(int xa, int ya) {
@@ -81,6 +98,8 @@ public class Player extends Mob {
 		int xMax = 7;
 		int yMin = 3;
 		int yMax = 7;
+		
+		// For Solid Detection 
 		for(int x = xMin; x < xMax; x++ ){
 			if(isSolidTile(xa, ya, x, yMin))
 				return true;
@@ -97,7 +116,36 @@ public class Player extends Mob {
 			if(isSolidTile(xa, ya, xMax, y))
 				return true;
 		}
+		
+		// For Spike Detection
+		for(int x = xMin; x < xMax; x++ ){
+			if(isSpikeTile(xa, ya, x, yMin))
+				return false;
+		}
+		for(int x = xMin; x < xMax; x++ ){
+			if(isSpikeTile(xa, ya, x, yMax))
+				return false;
+		}
+		for(int y = yMin; y < yMax; y++ ){
+			if(isSpikeTile(xa, ya, xMin, y))
+				return false;
+		}
+		for(int y = yMin; y < yMax; y++ ){
+			if(isSpikeTile(xa, ya, xMax, y))
+				return false;
+		}
 		return false;
 	}
-
+	
+	public static int getHealth(){
+		return health;
+		
+		// We made this static so it is accessible from the Mob class
+	}
+	
+	public static void setHealth(int Health){
+		health = Health;
+		
+		// It's static for the same reason as getHealth
+	}
 }
