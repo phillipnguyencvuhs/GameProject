@@ -28,29 +28,24 @@ public class GameRunner extends Canvas implements Runnable {
 	public boolean running = true;
 	public int tickcount = 0;
 
-	/*
-	 * private BufferedImage dead;
-	 * 
-	 * private void assignDead(){ try { dead = ImageIO.read(new
-	 * File("C:\\Users\\Phillip\\workspace\\GameProject\\res\\dead.png")); }
-	 * catch(Exception e){ } }
-	 */
-
+	//death screen image
 	Image dead;
 
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT,
 			BufferedImage.TYPE_INT_RGB);
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer())
 			.getData(); // represents how many pixels are inside image
-	private int[] colors = new int[6 * 6 * 6]; // 216 is from amount of colors
-												// we want
-												// (36) times 6 for RGB
-	// make basic things required for game
+	private int[] colors = new int[6 * 6 * 6]; 
+	// 216 is from amount of colors we want, (36) times 6 for RGB
+	
+	/////////////////////////////////////////
+	//make basic things required for game
 	public Screen screen;
 	public InputHandler input;
 	public Level level;
 	public Player player;
-
+	////////////////////////////////////////
+	
 	// a list of the names of the level files
 	public String[] list = { "/large_level.png", "/large_maze_level.png",
 			"/medium_level.png", "/small_level.png", "/small_maze_level.png", };
@@ -64,7 +59,8 @@ public class GameRunner extends Canvas implements Runnable {
 		setMaximumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 
-		// setting up JFrame
+		//////////////////////////////////////////////////////
+		//setting up JFrame
 		frame = new JFrame(NAME);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
@@ -73,23 +69,26 @@ public class GameRunner extends Canvas implements Runnable {
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
+		/////////////////////////////////////////////////////
 	}
 
 	public void init() {
 		// assignDead();
 		int index = 0;
+		
+		//makes all the colors
 		for (int r = 0; r < 6; r++) {
 			for (int g = 0; g < 6; g++) {
 				for (int b = 0; b < 6; b++) {
 					int rr = (r * 255 / 5);
 					int gg = (g * 255 / 5);
 					int bb = (b * 255 / 5);
-
 					colors[index++] = rr << 16 | gg << 8 | bb;
 				}
 			}
 		}
-
+		
+		//set the screen (to render from) 
 		screen = new Screen(WIDTH, HEIGHT, new SpriteSheet("/sprite_sheet.png"));
 		input = new InputHandler(this);
 
@@ -104,15 +103,18 @@ public class GameRunner extends Canvas implements Runnable {
 		level.addEntity(player);
 	}
 
+	//sets running to true and makes a new thread
 	public synchronized void start() {
 		running = true;
 		new Thread(this).start();
 	}
 
+	//makes the game stop updating
 	public synchronized void stop() {
 		running = false;
 	}
 
+	//the method that calls all the other methods
 	public void run() {
 		long lastTime = System.nanoTime();
 		double nsPerTick = 1000000000.0 / 60.0; // how many nano secs per tick
@@ -123,6 +125,7 @@ public class GameRunner extends Canvas implements Runnable {
 		long lastTimer = System.currentTimeMillis(); // time to reset data
 		double delta = 0; // how many unprocessed nano seconds so far
 
+		//initializes game variables and settings
 		init();
 
 		while (running) {
@@ -137,7 +140,8 @@ public class GameRunner extends Canvas implements Runnable {
 				delta -= 1;
 				shouldRender = true;
 			}
-
+			
+			//limits the fps to something reasonable
 			try {
 				Thread.sleep(2);
 			} catch (InterruptedException e) {
@@ -178,10 +182,13 @@ public class GameRunner extends Canvas implements Runnable {
 
 			int xOffset = player.x - (screen.width / 2);
 			int yOffset = player.y - (screen.height / 2);
-
+			
+			//renders the tiles of the level
 			level.renderTiles(screen, xOffset, yOffset);
+			//renders the entities on the level
 			level.renderEntities(screen);
 
+			//colors in the tiles
 			for (int y = 0; y < screen.height; y++) {
 				for (int x = 0; x < screen.width; x++) {
 					int colorCode = screen.pixels[x + y * screen.width];
@@ -190,6 +197,7 @@ public class GameRunner extends Canvas implements Runnable {
 				}
 			}
 
+			//final drawing stuff:
 			Graphics g = bs.getDrawGraphics();
 			g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 			g.dispose(); // free up memory
@@ -200,6 +208,7 @@ public class GameRunner extends Canvas implements Runnable {
 			// assign death image
 			dead = new ImageIcon("res/dead.png").getImage();
 			repaint();
+			//stops the game
 			stop();
 		}
 	}
@@ -222,6 +231,7 @@ public class GameRunner extends Canvas implements Runnable {
 		g.drawImage(thumbImage, 0, 0, this);
 	}
 
+	//starts the game
 	public static void main(String[] args) {
 		new GameRunner().start();
 	}

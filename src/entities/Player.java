@@ -8,19 +8,28 @@ import Main.InputHandler;
 
 public class Player extends Mob {
 
+	//input handler for moving player
 	private InputHandler input;
+	//colors the player (look in spritesheet)
 	private int color = Colors.get(-1, 111, 300, 543);
-
+	//health variable
 	public static int health = 13;
+	//for rendering hearts (look in font class)
 	private String life = ("###");
+	//to center hearts
 	private int adjustment = 5;
 	
+	////////////////////////////////////////////////////////////
+	// Constructor assigns player to level, location for spawn,
+	// and gives the player an input handler
+	///////////////////////////////////////////////////////////
 	public Player(Level level, int x, int y, InputHandler input) {
 		// creates the player
 		super(level, "Player", x, y, 1);
 		this.input = input;
 	}
-
+	
+	//tick updates player and moves
 	public void tick() {
 		int xa = 0;
 		int ya = 0;
@@ -48,10 +57,13 @@ public class Player extends Mob {
 		this.scale = 1;
 	}
 
+	//renders player with spritesheet info
 	public void render(Screen screen) {
 		//location of player on sprite sheet (first tile)
+		//player is made out of 4 tiles
 		int xTile = 0; 
 		int yTile = 28;
+		
 		int walkingSpeed = 3;
 		int flipTop = (numSteps >> walkingSpeed) & 1;
 		int flipBottom = (numSteps >> walkingSpeed) & 1;
@@ -79,6 +91,7 @@ public class Player extends Mob {
 		screen.render(xOffset + (modifier * flipBottom), yOffset + modifier, xTile + (yTile + 1) * 32, color, flipBottom, scale);
 		screen.render(xOffset + modifier - (modifier * flipBottom), yOffset + modifier, (xTile + 1) + (yTile + 1) * 32, color, flipBottom, scale);
 		
+		//changes hearts above player based on life total
 		if(health == 13){
 			life = "###";
 			adjustment = 5;
@@ -146,15 +159,15 @@ public class Player extends Mob {
 		return false;
 	}
 	
+	//returns health
 	public static int getHealth(){
 		return health;
-		
 		// We made this static so it is accessible from the Mob class
 	}
 	
+	//sets health
 	public static void setHealth(int Health){
 		health = Health;
-		
 		// It's static for the same reason as getHealth
 	}
 

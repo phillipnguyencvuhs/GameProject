@@ -21,6 +21,9 @@ public class Level {
 	public int height;
 	public List<Entity> entities = new ArrayList<Entity>();
 
+	//////////////////////////////////////////////////////
+	// Loads level using data from a level file
+	/////////////////////////////////////////////////////
 	public Level(String imagePath) {
 		if(imagePath != null){
 			this.imagePath = imagePath;
@@ -34,6 +37,7 @@ public class Level {
 		}
 	}
 	
+	//backup loading
 	private void loadLevelFromFile(){
 		try{
 			this.image = ImageIO.read(Level.class.getResource(this.imagePath));
@@ -61,6 +65,7 @@ public class Level {
 		}
 	}
 	
+	//not used in our project
 	public void saveLevelToFile(){
 		try{
 			ImageIO.write(image, "png", new File(Level.class.getResource(this.imagePath).getFile()));
@@ -83,12 +88,14 @@ public class Level {
 		}
 	}
 
+	//updates all the entities in the level
 	public void tick() {
 		for (Entity e : entities) {
 			e.tick();
 		}
 	}
 
+	//makes sure only tiles in window render
 	public void renderTiles(Screen screen, int xOffset, int yOffset) {
 		if (xOffset < 0)
 			xOffset = 0;
@@ -115,12 +122,14 @@ public class Level {
 		}
 	}
 
+	//returns information of a selected tile
 	public Tile getTile(int x, int y) {
 		if (0 > x || x >= width || 0 > y || y >= height)
 			return Tile.VOID;
 		return Tile.tiles[tiles[x + y * width]];
 	}
 
+	//adds an entity into the level
 	public void addEntity(Entity entity) {
 		this.entities.add(entity);
 	}
