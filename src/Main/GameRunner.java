@@ -96,7 +96,8 @@ public class GameRunner extends Canvas implements Runnable {
 		// purposes
 		System.out.println(select);
 		// constructs the level
-		level = new Level(select);
+		//level = new Level(select);
+		level = new Level("/large_level.png");
 		// makes a player with coordinates 0,0 and basic controls
 		player = new Player(level, 10, 10, input);
 		// puts player into level

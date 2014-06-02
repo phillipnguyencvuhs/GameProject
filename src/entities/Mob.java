@@ -91,12 +91,12 @@ public abstract class Mob extends Entity {
 		if (level == null)
 			return false;
 
-		//Tile lastTile = level.getTile((this.x + x) >> 3, (this.y + y) >> 3);
+		Tile lastTile = level.getTile((this.x + x) >> 3, (this.y + y) >> 3);
 		Tile newTile = level.getTile((this.x + x + xa) >> 3,
 				(this.y + y + ya) >> 3);
 		
 		//returns true if player hit a spike
-		if (newTile.isSpike()) {
+		if (!lastTile.isSpike() && (newTile.isSpike())) {
 			return true;
 		}
 
