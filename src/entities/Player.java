@@ -11,7 +11,7 @@ public class Player extends Mob {
 	private InputHandler input;
 	private int color = Colors.get(-1, 111, 300, 543);
 
-	public static int health = 3;
+	public static int health = 13;
 	private String life = ("###");
 	private int adjustment = 5;
 	
@@ -79,27 +79,28 @@ public class Player extends Mob {
 		screen.render(xOffset + (modifier * flipBottom), yOffset + modifier, xTile + (yTile + 1) * 32, color, flipBottom, scale);
 		screen.render(xOffset + modifier - (modifier * flipBottom), yOffset + modifier, (xTile + 1) + (yTile + 1) * 32, color, flipBottom, scale);
 		
-		if(health == 3){
+		if(health == 13){
 			life = "###";
 			adjustment = 5;
-		} else if(health == 2){
+		} else if(health == 9){
 			life = "##";
 			adjustment = 0;
-		} else if(health == 1){
+		} else if(health == 5){
 			life = "#";
 			adjustment = -3;
 		}
 		
 		Font.render(life, screen, xOffset - adjustment, yOffset - 10, Colors.get(-1, -1, -1, 257), 1);
 	}
-
+	
+	// For Solid Detection 
 	public boolean hasCollided(int xa, int ya) {
 		int xMin = 0;
 		int xMax = 7;
 		int yMin = 3;
 		int yMax = 7;
 		
-		// For Solid Detection 
+		
 		for(int x = xMin; x < xMax; x++ ){
 			if(isSolidTile(xa, ya, x, yMin))
 				return true;
@@ -116,23 +117,31 @@ public class Player extends Mob {
 			if(isSolidTile(xa, ya, xMax, y))
 				return true;
 		}
+		return false;
+	}
+	
+	// For Spike Detection
+	public boolean isDamaged(int xa, int ya) {
+		int xMin = 0;
+		int xMax = 7;
+		int yMin = 3;
+		int yMax = 7;
 		
-		// For Spike Detection
 		for(int x = xMin; x < xMax; x++ ){
 			if(isSpikeTile(xa, ya, x, yMin))
-				return false;
+				return true;
 		}
 		for(int x = xMin; x < xMax; x++ ){
 			if(isSpikeTile(xa, ya, x, yMax))
-				return false;
+				return true;
 		}
 		for(int y = yMin; y < yMax; y++ ){
 			if(isSpikeTile(xa, ya, xMin, y))
-				return false;
+				return true;
 		}
 		for(int y = yMin; y < yMax; y++ ){
 			if(isSpikeTile(xa, ya, xMax, y))
-				return false;
+				return true;
 		}
 		return false;
 	}
@@ -148,4 +157,5 @@ public class Player extends Mob {
 		
 		// It's static for the same reason as getHealth
 	}
+
 }

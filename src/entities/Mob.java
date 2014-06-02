@@ -50,9 +50,15 @@ public abstract class Mob extends Entity {
 			x += xa * speed;
 			y += ya * speed;
 		}
+		
+		if(isDamaged(xa, ya)) {
+			Player.setHealth(Player.getHealth() - 1);
+		}
 	}
 
 	public abstract boolean hasCollided(int xa, int ya);
+	
+	public abstract boolean isDamaged(int xa, int ya);
 	
 	protected boolean isSolidTile(int xa, int ya, int x, int y){
 		if(level == null) 
@@ -74,8 +80,7 @@ public abstract class Mob extends Entity {
 		Tile newTile = level.getTile((this.x + x + xa) >> 3, (this.y + y + ya) >> 3);
 		
 		if(!lastTile.equals(newTile) && newTile.isSpike()){
-			Player.setHealth(Player.getHealth() - 1);
-			return false;
+			return true;
 		}
 		
 		return false;

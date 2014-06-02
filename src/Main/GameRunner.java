@@ -208,12 +208,12 @@ public class GameRunner extends Canvas implements Runnable {
 	public void paint(Graphics g) {
 
 		/************************************************************
-		 * This was the only method of adding an image I could find 
-		 * that actually works with this project. The death image is 
-		 * blank until the players health reaches 0, otherwise it 
-		 * would show the image when the game starts up.
+		 * This was the only method of adding an image I could find that
+		 * actually works with this project. The death image is blank until the
+		 * players health reaches 0, otherwise it would show the image when the
+		 * game starts up.
 		 ************************************************************/
-		
+
 		BufferedImage thumbImage = new BufferedImage(WIDTH * SCALE + 10, HEIGHT
 				* SCALE + 10, BufferedImage.TYPE_INT_RGB);
 		Graphics2D graphics2D = thumbImage.createGraphics();

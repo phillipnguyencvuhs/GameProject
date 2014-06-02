@@ -12,6 +12,7 @@ public class SpikeTile extends Tile{
 		super(id, false, false, levelColor);
 		this.tileId = x;
 		this.tileColor = tileColor;
+		this.spike = true;
 	}
 	
 	public void render(Screen screen, Level level, int x, int y) {

@@ -7,7 +7,6 @@ public class BasicTile extends Tile{
 
 	protected int tileId;
 	protected int tileColor;
-	
 	/* id is for determining which block is which
 	 x and y are for creating the id
 	 tileColor is what the color is on the actual image
