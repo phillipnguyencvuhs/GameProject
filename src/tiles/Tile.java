@@ -22,11 +22,14 @@ public abstract class Tile {
 	public static final Tile FLOOR = new BasicTile(2, 2, 0, Colors.get(-1, 181,
 			171, -1), 0xFFFFFFFF);
 	public static final Tile SPIKE = new SpikeTile(3, 4, 0, Colors.get(-1, 181, 171, 333), 0xFF9a9a9a);
+	public static final Tile CHEST = new ChestTile(4, 5, 0, Colors.get(-1, 170, 000, 446
+			), 0xFF00ff00);
 
 	protected byte id; // telling what is what
 	protected boolean solid; // for collision detection
 	protected boolean emitter; // for light
 	protected boolean spike; // for damage
+	protected boolean chest;
 	
 	private int levelColor;
 
@@ -52,6 +55,10 @@ public abstract class Tile {
 	
 	public boolean isSpike(){
 		return spike;
+	}
+	
+	public boolean isChest(){
+		return chest;
 	}
 
 	public boolean isEmitter() {

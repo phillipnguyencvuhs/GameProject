@@ -29,12 +29,12 @@ public class GameRunner extends Canvas implements Runnable {
 	public int tickcount = 0;
 
 	//death screen image
-	Image dead;
+	Image result;
 
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT,
 			BufferedImage.TYPE_INT_RGB);
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer())
-			.getData(); // represents how many pixels are inside image
+			.getData(); // represents how many pixels are inside images
 	private int[] colors = new int[6 * 6 * 6]; 
 	// 216 is from amount of colors we want, (36) times 6 for RGB
 	
@@ -96,8 +96,8 @@ public class GameRunner extends Canvas implements Runnable {
 		// purposes
 		System.out.println(select);
 		// constructs the level
-		//level = new Level(select);
-		level = new Level("/large_level.png");
+		level = new Level(select);
+		//level = new Level("/large_level.png");
 		// makes a player with coordinates 0,0 and basic controls
 		player = new Player(level, 10, 10, input);
 		// puts player into level
@@ -179,7 +179,7 @@ public class GameRunner extends Canvas implements Runnable {
 		}
 
 		// renders game if player is alive
-		if (player.getHealth() > 0) {
+		if (player.getHealth() > 0 && Player.getHealth() < 1000) {
 
 			int xOffset = player.x - (screen.width / 2);
 			int yOffset = player.y - (screen.height / 2);
@@ -205,9 +205,15 @@ public class GameRunner extends Canvas implements Runnable {
 			bs.show(); // show contents of the buffer
 		}
 		// renders death screen when player is dead
+		else if(Player.getHealth() > 1000){
+			result = new ImageIcon("res/win.png").getImage();
+			repaint();
+			//stops the game
+			stop();
+		}
 		else {
 			// assign death image
-			dead = new ImageIcon("res/dead.png").getImage();
+			result = new ImageIcon("res/dead.png").getImage();
 			repaint();
 			//stops the game
 			stop();
@@ -227,7 +233,7 @@ public class GameRunner extends Canvas implements Runnable {
 		BufferedImage thumbImage = new BufferedImage(WIDTH * SCALE + 10, HEIGHT
 				* SCALE + 10, BufferedImage.TYPE_INT_RGB);
 		Graphics2D graphics2D = thumbImage.createGraphics();
-		graphics2D.drawImage(dead, 0, 0, WIDTH * SCALE + 10, HEIGHT * SCALE
+		graphics2D.drawImage(result, 0, 0, WIDTH * SCALE + 10, HEIGHT * SCALE
 				+ 10, null);
 		g.drawImage(thumbImage, 0, 0, this);
 	}

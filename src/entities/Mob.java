@@ -62,7 +62,13 @@ public abstract class Mob extends Entity {
 		if (isDamaged(xa, ya)) {
 			Player.setHealth(Player.getHealth() - 1);
 		}
+		
+		if(isWin(xa,ya)) {
+			Player.setHealth(Player.getHealth() + 1000);
+		}
 	}
+	
+	public abstract boolean isWin(int xa, int ya);
 
 	public abstract boolean hasCollided(int xa, int ya);
 
@@ -103,6 +109,23 @@ public abstract class Mob extends Entity {
 		return false;
 	}
 
+	protected boolean isChestTile(int xa, int ya, int x, int y) {
+		//automatically return false if no level
+		if (level == null)
+			return false;
+
+		Tile lastTile = level.getTile((this.x + x) >> 3, (this.y + y) >> 3);
+		Tile newTile = level.getTile((this.x + x + xa) >> 3,
+				(this.y + y + ya) >> 3);
+		
+		//returns true if player hit a spike
+		if (newTile.isChest()) {
+			return true;
+		}
+
+		return false;
+	}
+	
 	//returns name of mob
 	public String getName() {
 		return name;
