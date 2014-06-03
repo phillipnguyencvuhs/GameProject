@@ -72,8 +72,8 @@ public class GameRunner extends Canvas implements Runnable {
 		/////////////////////////////////////////////////////
 	}
 
+	//init method sets up the game
 	public void init() {
-		// assignDead();
 		int index = 0;
 		
 		//makes all the colors

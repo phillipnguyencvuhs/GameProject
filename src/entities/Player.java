@@ -48,6 +48,7 @@ public class Player extends Mob {
 			xa++;
 		}
 		
+		//stop moving
 		if(xa != 0 || ya != 0) {
 			move(xa, ya);
 			isMoving = true;
@@ -64,6 +65,9 @@ public class Player extends Mob {
 		int xTile = 0; 
 		int yTile = 28;
 		
+		
+		//////////////////////////////////////////////////////////////////
+		//Entire section flips player sprite image based on direction
 		int walkingSpeed = 3;
 		int flipTop = (numSteps >> walkingSpeed) & 1;
 		int flipBottom = (numSteps >> walkingSpeed) & 1;
@@ -76,6 +80,7 @@ public class Player extends Mob {
 			xTile += 4 + ((numSteps >> walkingSpeed) & 1) * 2;
 			flipTop = (movingDir - 1) % 2;
 		}
+		///////////////////////////////////////////////////////////////////
 		
 		//modifier variable
 		int modifier = 8 * scale;
@@ -103,6 +108,7 @@ public class Player extends Mob {
 			adjustment = -3;
 		}
 		
+		//renders life (in the form of hearts) above player
 		Font.render(life, screen, xOffset - adjustment, yOffset - 10, Colors.get(-1, -1, -1, 257), 1);
 	}
 	
@@ -112,7 +118,6 @@ public class Player extends Mob {
 		int xMax = 7;
 		int yMin = 3;
 		int yMax = 7;
-		
 		
 		for(int x = xMin; x < xMax; x++ ){
 			if(isSolidTile(xa, ya, x, yMin))
@@ -159,6 +164,7 @@ public class Player extends Mob {
 		return false;
 	}
 	
+	//for chest detection
 	public boolean isWin(int xa, int ya){
 		int xMin = 0;
 		int xMax = 7;

@@ -2,6 +2,12 @@ package gfx;
 
 public class Colors {
 
+	//color1 is black (0xFF000000)
+	//color2 is dark gray (0xFF555555)
+	//color3 is light gray (0xFF9a9a9a)
+	//color4 is white (0xFFffffff)
+	
+	//turns color into one number for easy configuration
 	public static int get(int color1, int color2, int color3, int color4) {
 		return (get(color4) << 24) + (get(color3) << 16) + (get(color2) << 8)
 				+ get(color1);

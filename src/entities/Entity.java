@@ -21,8 +21,9 @@ public abstract class Entity {
 		this.level = level;
 	}
 	
+	///////////////////////////////////////////////////
+	//prototype methods to be implemented 
 	public abstract void tick();
-	
 	public abstract void render(Screen screen);
-	
+	//////////////////////////////////////////////////
 }

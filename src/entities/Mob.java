@@ -63,11 +63,13 @@ public abstract class Mob extends Entity {
 			Player.setHealth(Player.getHealth() - 1);
 		}
 		
+		//chest detection
 		if(isWin(xa,ya)) {
 			Player.setHealth(Player.getHealth() + 1000);
 		}
 	}
 	
+	//prototype methods:
 	public abstract boolean isWin(int xa, int ya);
 
 	public abstract boolean hasCollided(int xa, int ya);
@@ -80,6 +82,7 @@ public abstract class Mob extends Entity {
 		if (level == null)
 			return false;
 		
+		//finds the current and last tile (calculated with position, offset, and scale)
 		Tile lastTile = level.getTile((this.x + x) >> 3, (this.y + y) >> 3);
 		Tile newTile = level.getTile((this.x + x + xa) >> 3,
 				(this.y + y + ya) >> 3);
@@ -97,6 +100,7 @@ public abstract class Mob extends Entity {
 		if (level == null)
 			return false;
 
+		//finds the current and last tile (calculated with position, offset, and scale)
 		Tile lastTile = level.getTile((this.x + x) >> 3, (this.y + y) >> 3);
 		Tile newTile = level.getTile((this.x + x + xa) >> 3,
 				(this.y + y + ya) >> 3);
@@ -114,11 +118,12 @@ public abstract class Mob extends Entity {
 		if (level == null)
 			return false;
 
+		//finds the current and last tile (calculated with position, offset, and scale)
 		Tile lastTile = level.getTile((this.x + x) >> 3, (this.y + y) >> 3);
 		Tile newTile = level.getTile((this.x + x + xa) >> 3,
 				(this.y + y + ya) >> 3);
 		
-		//returns true if player hit a spike
+		//returns true if player touches a chest
 		if (newTile.isChest()) {
 			return true;
 		}

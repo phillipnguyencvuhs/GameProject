@@ -37,7 +37,7 @@ public class Level {
 		}
 	}
 	
-	//backup loading
+	//backup loading method
 	private void loadLevelFromFile(){
 		try{
 			this.image = ImageIO.read(Level.class.getResource(this.imagePath));
@@ -51,6 +51,7 @@ public class Level {
 		}
 	}
 	
+	//puts tileId into the array of tiles
 	private void loadTiles(){
 		int[] tileColors = this.image.getRGB(0, 0, width, height, null, 0, width);
 		for(int y = 0; y < height; y++){

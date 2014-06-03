@@ -12,18 +12,25 @@ public class InputHandler implements KeyListener {
 		game.addKeyListener(this);
 	}
 
+	///////////////////////////////////////////////////////////
+	// Nested Class used only in input handler
+	///////////////////////////////////////////////////////////
 	public class Key {
+		
 		private int numTimesPressed = 0;
 		private boolean pressed = false;
 
+		//getter method
 		public int getNumTimesPressed() {
 			return numTimesPressed;
 		}
 
+		//getter method
 		public boolean isPressed() {
 			return pressed;
 		}
 
+		//sets pressed to either true or false
 		public void toggle(boolean isPressed) {
 			pressed = isPressed;
 			if (isPressed) {
@@ -37,20 +44,23 @@ public class InputHandler implements KeyListener {
 	public Key left = new Key();
 	public Key right = new Key();
 
+	//not used
 	public void keyTyped(KeyEvent e) {
 		
 	}
 
+	//checks if a key is pressed
 	public void keyPressed(KeyEvent e) {
 		toggleKey(e.getKeyCode(), true);
 	}
 
+	//checks if a key is released
 	public void keyReleased(KeyEvent e) {
 		toggleKey(e.getKeyCode(), false);
 	}
 
+	// WSAD and Arrow-key controls
 	public void toggleKey(int keyCode, boolean isPressed) {
-		// WSAD and Arrow-key controls
 		if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP ) {
 			up.toggle(isPressed);
 		}

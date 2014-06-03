@@ -10,7 +10,7 @@ public class Font {
 		msg = msg.toUpperCase();
 		
 		for (int i = 0; i < msg.length(); i++){
-			//following method finds  location of character in spritesheet
+			//following finds location of character in spritesheet
 			int charIndex = chars.indexOf(msg.charAt(i)); 
 			if(charIndex >=0)
 				screen.render(x + (i*8), y, charIndex + 30 * 32, color, 0x00, scale);

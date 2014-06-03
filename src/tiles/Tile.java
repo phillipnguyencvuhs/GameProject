@@ -30,7 +30,6 @@ public abstract class Tile {
 	protected boolean emitter; // for light
 	protected boolean spike; // for damage
 	protected boolean chest;
-	
 	private int levelColor;
 
 	public Tile(int id, boolean isSolid, boolean isEmitter, int levelColor) {

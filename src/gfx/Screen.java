@@ -21,6 +21,7 @@ public class Screen {
 
 	public SpriteSheet sheet;
 
+	//initializes instance variables 
 	public Screen(int width, int height, SpriteSheet sheet) {
 
 		this.width = width;
@@ -42,6 +43,7 @@ public class Screen {
 	 * bin: 0 0 0 0 0 1 0 1 = 5 (in decimal)
 	 *****************************************************************/
 
+	//draws things on screen, used by Player and Tiles
 	public void render(int xPos, int yPos, int tile, int color, int mirrorDir, int scale) {
 
 		/*******************************************************
@@ -99,6 +101,7 @@ public class Screen {
 		}
 	}
 
+	//used for moving camera
 	public void setOffset(int xOffset, int yOffset) {
 		this.xOffset = xOffset;
 		this.yOffset = yOffset;

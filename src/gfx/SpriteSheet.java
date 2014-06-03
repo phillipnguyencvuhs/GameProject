@@ -12,6 +12,7 @@ public class SpriteSheet {
 	public int height;
 	public int[] pixels;
 
+	//sets instance variables and makes an array of pixels
 	public SpriteSheet(String path) {
 		BufferedImage image = null;
 		try {
