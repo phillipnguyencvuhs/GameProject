@@ -10,7 +10,7 @@ import java.awt.image.*;
 import java.util.Random;
 import javax.swing.*;
 
-// 6/1/2014: 932 lines of code
+// 6/1/2014: exceeded 1000 lines of code
 
 public class GameRunner extends Canvas implements Runnable {
 
